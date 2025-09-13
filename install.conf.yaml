@@ -40,6 +40,9 @@
     ~/.config/k9s: k9s
     ~/.config/goose/config.yaml: goose/config.yaml
 
+    # Claude
+    ~/.claude/agents: claude/agents
+
 - shell:
     - command: git submodule sync --recursive
       description: Sync Submodules
