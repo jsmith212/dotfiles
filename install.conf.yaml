@@ -196,3 +196,6 @@
     - command: curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | CONFIGURE=false bash
       description: Install Goose CLI
       quiet: true
+    - command: bash <(curl -fsSL https://moonrepo.dev/install/moon.sh)
+      description: Install Moon
+      quiet: true
