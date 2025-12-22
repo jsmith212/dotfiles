@@ -90,8 +90,8 @@ return {
       queries = {
         html = {
           { pattern = 'class="([^"]*)"', placeholder = "@" }, -- classes in html
-          { pattern = 'href="(.-)"' }, -- hrefs in html
-          { pattern = 'src="(.-)"' }, -- HTML img src attribute
+          { pattern = 'href="(.-)"' },                        -- hrefs in html
+          { pattern = 'src="(.-)"' },                         -- HTML img src attribute
         },
       },
     },
@@ -150,7 +150,7 @@ return {
   {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {
-      { "tpope/vim-dadbod", lazy = true },
+      { "tpope/vim-dadbod",                     lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
     },
     cmd = {
@@ -339,23 +339,12 @@ return {
     end,
   },
   {
-    "Davidyz/VectorCode",
-    version = "*",
-    build = "uv tool install vectorcode",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = { "VectorCode" },
-    config = function()
-      require("configs.vectorcode").setup()
-    end,
-  },
-  {
     "olimorris/codecompanion.nvim",
     config = true,
     lazy = false, -- Otherwise it won't load
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "Davidyz/VectorCode",
       "j-hui/fidget.nvim",
     },
     opts = function()
@@ -375,7 +364,7 @@ return {
       require("oil").setup(opts)
     end,
     keys = {
-      { "-", "<Cmd>Oil<CR>", mode = "n", desc = "Open parent directory" },
+      { "-",        "<Cmd>Oil<CR>",         mode = "n", desc = "Open parent directory" },
       { "<space>-", "<Cmd>Oil --float<CR>", mode = "n", desc = "Open parent directory in floating window" },
     },
     -- Cannot be lazy loaded because otherwise it won't open
