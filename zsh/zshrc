@@ -210,8 +210,10 @@ zstyle ':completion:*:messages' format "%F{green}%d%f"
 # zsh-autosuggestions key bindings
 bindkey '^[l' autosuggest-accept
 
-# Use zoxide
-eval "$(zoxide init --cmd cd zsh)"
+# Use zoxide, only if not using Claude
+if [[ "$CLAUDECODE" != "1" ]]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 # Setup fzf
 eval "$(fzf --zsh)"
