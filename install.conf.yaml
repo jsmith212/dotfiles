@@ -142,7 +142,7 @@
       versions:
         - latest
     - plugin: zoxide
-      url: https://github.com/nyrst/asdf-zoxide.git
+      url: https://github.com/pauloedurezende/asdf-zoxide.git
       default: latest
       versions:
         - latest
@@ -192,9 +192,6 @@
       quiet: true
     - command: helm plugin install https://github.com/jkroepke/helm-secrets --version v4.6.5
       description: Install Helm Secrets Plugin
-      quiet: true
-    - command: curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | CONFIGURE=false bash
-      description: Install Goose CLI
       quiet: true
     - command: bash <(curl -fsSL https://moonrepo.dev/install/moon.sh)
       description: Install Moon
