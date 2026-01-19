@@ -6,6 +6,7 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
+map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal to Normal mode" })
 
 -- TMUX nav
 map("n", "<C-h>", "<cmd> TmuxNavigateLeft <cr>", { desc = "Navigate to left pane in tmux" })
