@@ -181,6 +181,16 @@
       default: latest
       versions:
         - latest
+    - plugin: ripgrep
+      url: https://gitlab.com/wt0f/asdf-ripgrep
+      default: latest
+      versions:
+        - latest
+    - plugin: doppler
+      url: https://github.com/takutakahashi/asdf-doppler.git
+      default: latest
+      versions:
+        - latest
 
 - shell:
     # Need the preview flag because global is not officially supported yet
