@@ -117,6 +117,7 @@ return {
   {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
+      "lewis6991/async.nvim", -- required since refactoring.nvim migrated off plenary.async
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },

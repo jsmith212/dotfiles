@@ -1,28 +1,18 @@
 -- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
-local blink_capabilities = require("blink.cmp").get_lsp_capabilities()
-local util = require "lspconfig.util"
-
-local servers = { "html", "cssls", "svelte", "ts_ls", "tailwindcss" }
 local nvlsp = require "nvchad.configs.lspconfig"
+local blink_capabilities = require("blink.cmp").get_lsp_capabilities()
 
--- merge blink capabilities with nvlsp capabilities
+-- Merge blink capabilities with nvlsp capabilities and apply to every server.
+-- defaults() already wires on_attach (via an LspAttach autocmd) and on_init globally.
 local capabilities = vim.tbl_deep_extend("force", nvlsp.capabilities, blink_capabilities)
+vim.lsp.config("*", { capabilities = capabilities })
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = capabilities,
-  }
-end
+-- lsps that just use nvim-lspconfig's shipped defaults
+vim.lsp.enable { "html", "cssls", "svelte", "ts_ls", "tailwindcss", "pyright" }
 
-lspconfig.emmet_ls.setup {
-  on_attach = nvlsp.on_attach,
-  capabilities = capabilities,
+vim.lsp.config("emmet_ls", {
   filetypes = {
     "css",
     "eruby",
@@ -46,7 +36,8 @@ lspconfig.emmet_ls.setup {
       },
     },
   },
-}
+})
+vim.lsp.enable "emmet_ls"
 
 local c = require "configs.local_lspconfig"
 
@@ -86,18 +77,11 @@ vim.lsp.config("clangd", {
 })
 vim.lsp.enable("clangd")
 
-lspconfig.pyright.setup {
-  on_attach = nvlsp.on_attach,
-  capabilities = capabilities,
-  filetypes = { "python" },
-}
+-- pyright uses nvim-lspconfig's shipped defaults (enabled above).
 
-lspconfig.gopls.setup {
-  on_attach = nvlsp.on_attach,
-  capabilities = capabilities,
-  cmd = { "gopls" },
-  filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+-- gopls: the shipped config already sets cmd/filetypes/root_dir, so only the
+-- extra settings need to be layered on top.
+vim.lsp.config("gopls", {
   settings = {
     gopls = {
       completeUnimported = true,
@@ -106,4 +90,5 @@ lspconfig.gopls.setup {
       },
     },
   },
-}
+})
+vim.lsp.enable "gopls"
