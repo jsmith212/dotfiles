@@ -73,9 +73,9 @@
         - latest
     - plugin: golang
       url: https://github.com/kennyp/asdf-golang
-      default: 1.24.4
+      default: 1.26.1
       versions:
-        - 1.24.4
+        - 1.26.1
     - plugin: k9s
       url: https://github.com/looztra/asdf-k9s.git
       default: latest
