@@ -1,0 +1,160 @@
+/* Shared GTK3/GTK4 user overrides
+ * Expects colors.css to define:
+ * @background, @surface_container*, @on_surface, @on_background,
+ * @primary, @on_primary, @primary_container, @on_primary_container,
+ * @outline_variant, @surface_variant
+ */
+@import url("colors.css");
+
+/* ---- Base ---- */
+window,
+dialog,
+.background {
+  background-color: @background;
+  color: @on_background;
+}
+
+/* Keep global text sane without “paint-roller” backgrounds */
+* {
+  color: @on_surface;
+  caret-color: @on_surface;
+}
+
+/* ---- Headerbar / toolbars ---- */
+headerbar,
+.toolbar,
+.primary-toolbar {
+  background-color: @surface_container_high;
+  color: @on_surface;
+  border-bottom: 1px solid @outline_variant;
+}
+
+/* Title text (works for lots of GTK3/GTK4 apps) */
+headerbar title,
+headerbar .title {
+  color: @on_surface;
+}
+
+/* ---- Main content areas ---- */
+.view,
+viewport,
+scrolledwindow,
+stack {
+  background-color: @surface_container_low;
+  color: @on_surface;
+}
+
+/* Sidebars (Thunar places tree, etc.) */
+.sidebar,
+.sidebar .view,
+.sidebar viewport {
+  background-color: @surface_container;
+  color: @on_surface;
+}
+
+/* ---- Lists / rows ---- */
+list,
+treeview,
+row {
+  background-color: transparent;
+  color: @on_surface;
+}
+
+row:hover,
+list row:hover {
+  background-color: @surface_container_high;
+}
+
+row:selected,
+list row:selected,
+treeview.view:selected,
+.view:selected {
+  background-color: @primary;
+  color: @on_primary;
+}
+
+/* ---- Buttons ---- */
+button {
+  background-color: @surface_container_high;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+}
+
+button:hover {
+  background-color: @surface_container_highest;
+}
+
+button:active,
+button:checked,
+togglebutton:checked {
+  background-color: @primary_container;
+  color: @on_primary_container;
+  border-color: @primary;
+}
+
+/* Suggested/destructive variants (common selectors across GTK3/GTK4) */
+button.suggested-action {
+  background-color: @primary;
+  color: @on_primary;
+  border-color: @primary;
+}
+
+button.destructive-action {
+  background-color: @error_container;
+  color: @on_error_container;
+  border-color: @error_container;
+}
+
+/* ---- Inputs ---- */
+entry,
+textview,
+spinbutton,
+combobox,
+combobox entry {
+  background-color: @surface_container;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+}
+
+entry:focus,
+textview:focus,
+spinbutton:focus,
+combobox:focus {
+  border-color: @primary;
+}
+
+/* ---- Menus / popovers ---- */
+menu,
+.menu,
+popover,
+popover > contents,
+popover.background {
+  background-color: @surface_container_high;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 14px;
+}
+
+/* ---- Tooltips ---- */
+tooltip,
+tooltip.background {
+  background-color: @surface_container_highest;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+}
+
+/* ---- Scrollbars (subtle) ---- */
+scrollbar slider {
+  background-color: @surface_variant;
+  border-radius: 999px;
+  min-width: 10px;
+  min-height: 10px;
+}
+
+scrollbar slider:hover {
+  background-color: @outline;
+}
+

@@ -1,0 +1,18 @@
+# Generated with hyprdynamicmonitors freeze.
+# This is a template that you can edit, it is just a starter that pulled your current monitor setup,
+# adjust as needed.
+# You can use templates here etc, see https://github.com/fiffeek/hyprdynamicmonitors/blob/main/examples/basic/hyprconfigs/template.go.tmpl.
+# Monitors are given arbitrary tags (the "monitor" prefix and the ID coming from hyprland).
+# If you are using tui to edit, leave this at the end of your file (the last monitor config applies)
+# and leave the markers.
+
+{{- $laptop := index .MonitorsByTag "laptop" -}}
+{{- $external := index .MonitorsByTag "external" -}}
+
+{{- if isLidClosed }}
+monitor={{$laptop.Name}},disable
+{{- else }}
+monitor={{$laptop.Name}},1920x1080@60.03300,2680x1440,1.00000000,transform,0,vrr,0
+{{- end }}
+
+monitor={{$external.Name}},3440x1440@99.98000,1920x0,1.00000000,transform,0,vrr,0

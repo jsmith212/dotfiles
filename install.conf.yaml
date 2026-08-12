@@ -22,6 +22,36 @@
     # Alacritty
     ~/.config/alacritty: alacritty
 
+    # Hyprland + desktop environment
+    ~/.config/hypr: desktop/hypr
+    ~/.config/hyprdynamicmonitors: desktop/hyprdynamicmonitors
+    ~/.config/waybar: desktop/waybar
+    ~/.config/rofi: desktop/rofi
+    ~/.config/swaync: desktop/swaync
+    ~/.config/matugen: desktop/matugen
+    ~/Wallpapers: desktop/wallpapers
+
+    # GTK / Qt theming
+    ~/.config/gtk-3.0: desktop/gtk-3.0
+    ~/.config/gtk-4.0: desktop/gtk-4.0
+    ~/.config/qt5ct: desktop/qt5ct
+    ~/.config/qt6ct: desktop/qt6ct
+    ~/.config/xsettingsd: desktop/xsettingsd
+    ~/.config/nwg-look: desktop/nwg-look
+    ~/.config/gtkrc: desktop/gtkrc
+    ~/.config/gtkrc-2.0: desktop/gtkrc-2.0-config
+    ~/.gtkrc-2.0: desktop/gtkrc-2.0-home
+    ~/.config/mimeapps.list: desktop/mimeapps.list
+
+    # Icon + cursor themes
+    ~/.local/share/icons/default: desktop/icons/default
+    ~/.local/share/icons/rose-pine: desktop/icons/rose-pine
+    ~/.local/share/icons/Slot-Nord-Dark-Icons: desktop/icons/Slot-Nord-Dark-Icons
+
+    # Desktop extras
+    ~/.config/btop: desktop/btop
+    ~/.config/fastfetch: desktop/fastfetch
+
     # ZSH Plugins
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh/zsh-autosuggestions
     ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: zsh/zsh-syntax-highlighting
@@ -52,6 +82,9 @@
       quiet: true
     - command: ./asdf/install-asdf.sh
       description: Install ASDF
+      quiet: false
+    - command: ./desktop/bootstrap.sh
+      description: Seed generated Hyprland colours + monitors
       quiet: false
 
 - asdf:
@@ -173,9 +206,9 @@
         - latest
     - plugin: rust
       url: https://github.com/code-lever/asdf-rust.git
-      default: 1.87.0
+      default: 1.97.1
       versions:
-        - 1.87.0
+        - 1.97.1
     - plugin: uv
       url: https://github.com/asdf-community/asdf-uv.git
       default: latest

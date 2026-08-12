@@ -1,0 +1,8 @@
+[Default Applications]
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+application/pdf=firefox.desktop
+application/zip=userapp-unzip-IN6DR3.desktop
+
+[Added Associations]
+application/pdf=firefox.desktop;
+application/zip=userapp-unzip-IN6DR3.desktop;

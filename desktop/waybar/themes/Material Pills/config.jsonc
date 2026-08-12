@@ -1,0 +1,337 @@
+{
+  "position": "top",
+  "margin-top": 4,
+  "modules-left": [
+    "group/menu",
+    "clock",
+    "mpris",
+  ],
+  "modules-center": ["hyprland/workspaces", "custom/notification"],
+  "modules-right": [
+    "tray",
+    "group/audio",
+    "group/battery",
+    "group/connectivity",
+  ],
+
+  //MODULES//
+
+  "custom/apps": {
+    "format": "",
+    "font-family": "JetBrainsMono Nerd Font",
+    "font-weight": 400,
+    "tooltip": true,
+    "tooltip-format": "Main Menu",
+    "on-click": "~/.config/rofi/scripts/menu.sh",
+  },
+  "custom/screenrecording-indicator": {
+    "format": "",
+    "on-click": "alacritty --title=Recorder --hold -e zsh -c '~/.config/hypr/scripts/screenrec.sh'",
+    "signal": 8,
+    "tooltip": true,
+    "tooltip-format": "Screen recording",
+    "return-type": "json",
+  },
+  "custom/screenshot": {
+    "format": "",
+    "on-click": "~/.config/hypr/scripts/screenshot.sh",
+    "signal": 8,
+    "tooltip": true,
+    "tooltip-format": "Screenshot",
+    "return-type": "json",
+  },
+  "custom/inhibit-sleep": {
+    "format": "󰒳",
+    "font-family": "JetBrainsMono Nerd Font",
+    "font-weight": 400,
+    "on-click": "~/.config/rofi/scripts/inhibit-sleep.sh",
+    "signal": 8,
+    "tooltip": true,
+    "tooltip-format": "Toggle sleep inhibition",
+    "return-type": "json",
+  },
+  "custom/lock": {
+    "format": "󰍁",
+    "tooltip": true,
+    "tooltip-format": "Lock",
+    "on-click": "hyprlock"
+  },
+  "custom/reboot": {
+    "format": "󰜉",
+    "tooltip": true,
+    "tooltip-format": "Reboot",
+    "on-click": "reboot"
+  },
+  "custom/power": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Shutdown",
+    "on-click": "shutdown now"
+  },
+
+  "group/menu": {
+		"orientation": "inherit",
+    "drawer": {},
+		"modules": [
+      "custom/apps",
+      "custom/screenshot",
+      "custom/screenrecording-indicator",
+      "custom/inhibit-sleep",
+      "custom/lock",
+      "custom/reboot",
+      "custom/power",
+		]
+  },
+
+  "clock": {
+    "format": " {:%I:%M %p}", // AM PM format
+    "format-alt": "{:%A  %e %B}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+  },
+
+  "hyprland/workspaces": {
+    "persistent-workspaces": { "*": [1, 2, 3, 4, 5] },
+    "on-click": "activate",
+    "format": "{windows}",
+    "format-window-separator": " ",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "class<.*imv*.>": "",
+      "class<.*bambustudio*.>": "󰐫",
+      "class<.*bitwarden*.>": "",
+      "class<.*handbrake*.>": "󰈫",
+      "class<.*stremio*.>": "󱖏",
+      "title<.*waydroid*.>": "",
+      "class<.*grayjay*.>": "󱗆",
+      "title<.*amazon.*>": "",
+      "class<firefox|org.mozilla.firefox|librewolf|floorp|mercury-browser|[Cc]achy-browser>": "",
+      "class<zen>": "󰰷",
+      "class<alacritty>": "",
+      "class<waterfox|waterfox-bin>": "",
+      "class<microsoft-edge>": "",
+      "class<Chromium|Thorium|[Cc]hrome>": "",
+      "class<brave-browser>": "🦁",
+      "class<tor-browser>": "",
+      "class<firefox-developer-edition>": "🦊",
+      "class<kitty|konsole>": "",
+      "class<kitty-dropterm>": "",
+      "class<com.mitchellh.ghostty>": "",
+      "class<org.wezfurlong.wezterm>": "",
+      "class<org.omarchy.terminal>": "󰏖",
+      "class<[Tt]hunderbird|[Tt]hunderbird-esr>": "",
+      "class<eu.betterbird.Betterbird>": "",
+      "title<.*gmail.*>": "󰊫",
+      "class<[Tt]elegram-desktop|org.telegram.desktop|io.github.tdesktop_x64.TDesktop>": "",
+      "class<discord|[Ww]ebcord|Vesktop>": "",
+      "title<.*whatsapp.*>": "",
+      "title<.*zapzap.*>": "",
+      "title<.*messenger.*>": "",
+      "title<.*facebook.*>": " ",
+      "title<.*reddit.*>": "",
+      "title<.*ChatGPT.*>": "󰚩",
+      "class<.*ChatGPT.*>": "󰚩",
+      "title<.*deepseek.*>": "󰚩",
+      "title<.*qwen.*>": "󰚩",
+      "class<subl>": "󰅳",
+      "class<slack>": "",
+      "class<mpv>": "",
+      "class<celluloid|Zoom>": "",
+      "class<Cider>": "󰎆 ",
+      "title<.*Picture-in-Picture.*>": "",
+      "title<.*youtube.*>": "",
+      "class<vlc>": "󰕼",
+      "title<.*cmus.*>": "",
+      "class<[Ss]potify>": "",
+      "class<virt-macodeger>": "",
+      "class<.virt-manager-wrapped>": "",
+      "class<virtualbox manager>": "💽",
+      "title<virtualbox>": "💽",
+      "class<remmina>": "🖥️",
+      "class<VSCode|code-url-handler|code-oss|codium|codium-url-handler|VSCodium>": "󰨞",
+      "class<dev.zed.Zed>": "󰵁",
+      "class<codeblocks>": "󰅩",
+      "title<.*github.*>": "",
+      "class<mousepad>": "",
+      "class<libreoffice-writer>": "",
+      "class<libreoffice-startcenter>": " 󰏆",
+      "class<libreoffice-calc>": "",
+      "title<.*nvim ~.*>": "",
+      "class<org.gnome.Nautilus>": "󰣆",
+      "title<.*vim.*>": "",
+      "title<.*figma.*>": "",
+      "title<.*jira.*>": "",
+      "class<jetbrains-idea>": "",
+      "title<*.VSCode.*>": "󰨞",
+      "class<.*code.*>": "󰨞",
+      "class<obs|com.obsproject.Studio>": "",
+      "class<polkit-gnome-authentication-agent-1>": "󰒃",
+      "class<nwg-look>": "",
+      "class<[Pp]avucontrol|org.pulseaudio.pavucontrol>": "󱡫",
+      "class<steam>": "",
+      "class<thunar|nemo>": "󰝰",
+      "class<Gparted>": "",
+      "class<gimp>": "",
+      "class<emulator>": "📱",
+      "class<android-studio>": "",
+      "class<org.pipewire.Helvum>": "󰓃",
+      "class<localsend>": "",
+      "class<PrusaSlicer|UltiMaker-Cura|OrcaSlicer>": "󰹛",
+    },
+  },
+
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10,
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "alacritty -e pulsemixer",
+    "on-click-right": "alacritty -e pulsemixer",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", ""],
+    },
+  },
+
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+
+  "group/audio": {
+		"orientation": "inherit",
+    "drawer": {
+      "children-class": "slider-sub",
+      "transition-left-to-right": false,
+    },
+		"modules": [
+      "pulseaudio",
+			"pulseaudio/slider",
+		]
+	},
+
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰌘 ethernet",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "alacritty -e impala",
+  },
+
+  "bluetooth": {
+    "format": "",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "alacritty -e bluetui",
+  },
+
+  "group/connectivity": {
+		"orientation": "inherit",
+		"modules": [
+      "bluetooth",
+			"network",
+		]
+	},
+
+  "upower": {
+    "format": " {percentage}",
+    "hide-if-empty": true,
+    "tooltip": true,
+    "tooltip-format": "{time}",
+    "tooltip-spacing": 20,
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": "",
+    },
+  },
+
+  "group/battery": {
+		"orientation": "inherit",
+    "drawer": {
+      "transition-left-to-right": false,
+    },
+		"modules": [
+      "upower",
+			"power-profiles-daemon",
+		]
+  },
+
+  "custom/notification": {
+    "tooltip": true,
+    "format": "<span size='16pt'>{icon}</span>",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true,
+  },
+
+  "mpris": {
+    "interval": 10,
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} {artist}",
+    "on-click-middle": "playerctl play-pause",
+    "on-click": "playerctl previous",
+    "on-click-right": "playerctl next",
+    "scroll-step": 5.0,
+    "on-scroll-up": "$HOME/.config/hypr/scripts/volume.sh --inc",
+    "on-scroll-down": "$HOME/.config/hypr/scripts/volume.sh --dec",
+    "smooth-scrolling-threshold": 1,
+    "tooltip": true,
+    "tooltip-format": "{status_icon} {title}\nLeft Click: previous\nMid Click: Pause\nRight Click: Next",
+    "player-icons": {
+      "chromium": "",
+      "default": "",
+      "firefox": "",
+      "kdeconnect": "",
+      "mopidy": "",
+      "mpv": "󰐹",
+      "spotify": "󰎆",
+      "vlc": "󰕼",
+    },
+    "status-icons": {
+      "paused": "",
+      "playing": "",
+      "stopped": "",
+    },
+    "dynamic-order": ["artist"],
+    "ignored-players": ["zen"],
+    "max-length": 25,
+  },
+
+
+}

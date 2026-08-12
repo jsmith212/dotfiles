@@ -1,0 +1,133 @@
+@import "~/.config/rofi/colors.rasi"
+
+/* ===== Matugen color aliasing ===== */
+* {
+    /* backgrounds (glass / layers) */
+    bg0:  @inverse-surface;              
+    bg1:  @inverse-on-surface;           
+    bg2:  @surface-container-high;       
+    bg3:  @outline-variant;              
+
+    /* text */
+    fg0:  @on-surface;                   
+    fg1:  @on-surface-variant;           
+    fg2:  @outline;                      
+
+    /* accents (PASTEL, NOT NEON) */
+    red:      @primary;                 
+    green:    @secondary;                
+    yellow:   @secondary-fixed-dim;      
+    blue:     @inverse-primary;          
+    magenta:  @tertiary;                 
+    cyan:     @secondary-fixed;          
+}
+
+configuration {
+    show-icons: true;
+}
+
+* {
+  font: "JetBrainsMono Nerd Font Propo 10";
+
+  accent: @blue;
+  urgent: @yellow;
+
+  background-color : transparent;
+  text-color       : @fg0;
+
+  margin  : 0;
+  padding : 0;
+  spacing : 0;
+}
+
+element-icon, element-text, scrollbar {
+  cursor: pointer;
+}
+
+/* ───────── Window ───────── */
+window {
+  location : southwest;
+  width    : 600px;
+  x-offset : 4px;
+  y-offset : -5px;
+
+  background-color: @bg1;
+  border: 1px;
+  border-color: @bg3;
+  border-radius: 6px;
+}
+
+/* ───────── Input ───────── */
+inputbar {
+  spacing  : 8px;
+  padding  : 4px 8px;
+  children : [ icon-search, entry ];
+
+  background-color: @bg2;
+}
+
+icon-search, entry, element-icon, element-text {
+  vertical-align: 0.5;
+}
+
+icon-search {
+  expand   : false;
+  filename : "search-symbolic";
+  size     : 14px;
+}
+
+textbox {
+  padding          : 4px 8px;
+  background-color : @bg2;
+}
+
+/* ───────── Grid layout ───────── */
+listview {
+  padding      : 8px;
+  lines        : 3;
+  columns      : 4;
+  spacing      : 10px;
+  scrollbar    : false;
+  fixed-height : false;
+  dynamic      : true;
+}
+
+/* ───────── Elements ───────── */
+element {
+  padding : 0px;          /* 🔑 remove padding */
+  margin  : 0px;
+  spacing : 0px;
+  border-radius: 6px;
+}
+
+/* text fully disabled */
+element-text {
+  enabled: false;
+  padding: 0px;
+}
+
+/* ───────── Selection ───────── */
+element selected {
+  background-color : @accent;
+  padding: 0px;          /* 🔑 prevent shift on selection */
+}
+
+/* urgent stays intact */
+element selected urgent {
+  background-color: @urgent;
+}
+
+/* ───────── Icon (PRECISE CENTERING) ───────── */
+element-icon {
+    size: 96px;
+    expand: true;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}
+
+/* ───────── Scrollbar ───────── */
+scrollbar {
+  handle-width : 4px;
+  handle-color : @fg2;
+  padding      : 0 4px;
+}

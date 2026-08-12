@@ -1,0 +1,97 @@
+[general]
+destination = "$HOME/.config/hypr/monitors.conf"
+# post_apply_exec = "sh -c '$HOME/.config/hyprdynamicmonitors/scripts/reload-desktop.sh'"
+
+[tui.colors]
+source = "~/.config/hyprdynamicmonitors/themes/matugen.toml"
+
+[lid-events]
+
+[lid_events.dbus_query_object]
+destination = "org.freedesktop.UPower"
+path = "/org/freedesktop/UPower"
+method = "org.freedesktop.DBus.Properties.Get"
+expected_lid_closing_value = "true"
+
+[[lid_events.dbus_query_object.args]]
+arg = "org.freedesktop.UPower"
+
+[[lid_events.dbus_query_object.args]]
+arg = "LidIsClosed"
+
+[[lid_events.dbus_signal_match_rules]]
+interface = "org.freedesktop.DBus.Properties"
+object_path = "/org/freedesktop/UPower"
+member = "PropertiesChanged"
+
+[[lid_events.dbus_signal_receive_filters]]
+name = "org.freedesktop.DBus.Properties.PropertiesChanged"
+body = "LidIsClosed"
+
+[power_events]
+
+[power_events.dbus_query_object]
+path = "/org/freedesktop/UPower/devices/line_power_AC"
+
+[[power_events.dbus_signal_match_rules]]
+object_path = "/org/freedesktop/UPower/devices/line_power_AC"
+
+[profiles.laptop]
+config_file = "$HOME/.config/hyprdynamicmonitors/hyprconfigs/laptop.go.tmpl"
+config_file_type = "template"
+
+[profiles.laptop.conditions]
+
+[[profiles.laptop.conditions.required_monitors]]
+name = "eDP-1"
+monitor_tag = "laptop"
+
+[profiles.desktop-home]
+config_file = "$HOME/.config/hyprdynamicmonitors/hyprconfigs/desktop-home.go.tmpl"
+config_file_type = "template"
+
+[profiles.desktop-home.conditions]
+
+[[profiles.desktop-home.conditions.required_monitors]]
+name = "eDP-1"
+monitor_tag = "laptop"
+
+[[profiles.desktop-home.conditions.required_monitors]]
+description = "AOC U34G2G4R3 0x0000D00C"
+monitor_tag = "external"
+
+[fallback_profile]
+config_file = "hyprconfigs/fallback.conf"
+config_file_type = "static"
+
+
+[profiles.yankyurt]
+config_file = "$HOME/.config/hyprdynamicmonitors/hyprconfigs/yankyurt.go.tmpl"
+config_file_type = "template"
+[profiles.yankyurt.conditions]
+
+[[profiles.yankyurt.conditions.required_monitors]]
+description = "AU Optronics 0x5B2D"
+monitor_tag = "monitor0"
+
+[[profiles.yankyurt.conditions.required_monitors]]
+description = "Hewlett Packard HP 27xw 6CM7481YBP"
+monitor_tag = "monitor1"
+
+
+[profiles.home_office]
+config_file = "$HOME/.config/hyprdynamicmonitors/hyprconfigs/home_office.go.tmpl"
+config_file_type = "template"
+[profiles.home_office.conditions]
+
+[[profiles.home_office.conditions.required_monitors]]
+description = "AU Optronics 0x5B2D"
+monitor_tag = "monitor0"
+
+[[profiles.home_office.conditions.required_monitors]]
+description = "Samsung Electric Company S22C300 0x5A365335"
+monitor_tag = "monitor1"
+
+[[profiles.home_office.conditions.required_monitors]]
+description = "Dell Inc. DELL S2240T H6V5634L0DFU"
+monitor_tag = "monitor2"
