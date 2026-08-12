@@ -90,7 +90,14 @@ pkill hyprlock 2>/dev/null
 # =========================
 # Matugen
 # =========================
-matugen image "$IMG_PATH"
+# --source-color-index 0 picks the most dominant colour without asking. Since
+# matugen 4.0, an image with several candidate source colours opens an
+# interactive prompt instead of defaulting to 0 -- and a prompt can never be
+# answered from a Hyprland keybind, so matugen just exits and the colours are
+# silently left stale. Index 0 is the pre-4.0 behaviour.
+if ! matugen image "$IMG_PATH" --source-color-index 0; then
+    notify-send -u critical "Matugen failed" "Colours not regenerated for $IMG_NAME"
+fi
 
 # =========================
 # Safe reloads

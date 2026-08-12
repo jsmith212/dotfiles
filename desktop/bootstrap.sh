@@ -51,8 +51,12 @@ mkdir -p "$HOME/.cache"
 ln -sfn "$IMG_PATH" "$CURRENT_WALL"
 ln -sfn "$IMG_PATH" "$CURRENT_WALLGIF"
 
-# matugen's post_hooks reload the live session (hyprctl, waybar, tmux). On a
-# fresh machine none of those are running, so don't let a failed hook abort us.
-matugen image "$IMG_PATH" || true
+# --source-color-index 0 picks the most dominant colour without asking. Since
+# matugen 4.0 an image with several candidate source colours opens an
+# interactive prompt, which fails outright when there's no terminal attached.
+#
+# matugen's post_hooks also reload the live session (hyprctl, waybar, tmux). On
+# a fresh machine none of those are running, so don't let a failed hook abort us.
+matugen image "$IMG_PATH" --source-color-index 0 || true
 
 echo "bootstrap: generated colours from $(basename "$IMG_PATH")"
