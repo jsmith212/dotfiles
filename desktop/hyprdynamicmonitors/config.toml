@@ -95,3 +95,21 @@ monitor_tag = "monitor1"
 [[profiles.home_office.conditions.required_monitors]]
 description = "Dell Inc. DELL S2240T H6V5634L0DFU"
 monitor_tag = "monitor2"
+
+
+[profiles.work]
+config_file = "/home/smitj/.config/hyprdynamicmonitors/hyprconfigs/work.go.tmpl"
+config_file_type = "template"
+[profiles.work.conditions]
+
+[[profiles.work.conditions.required_monitors]]
+description = "AU Optronics 0x5B2D"
+monitor_tag = "monitor0"
+
+[[profiles.work.conditions.required_monitors]]
+description = "Samsung Electric Company LS27F32xG HNCL617359"
+monitor_tag = "monitor1"
+
+[[profiles.work.conditions.required_monitors]]
+description = "Samsung Electric Company LS27F32xG HNCL617388"
+monitor_tag = "monitor2"

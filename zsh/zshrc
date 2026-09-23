@@ -222,7 +222,7 @@ eval "$(fzf --zsh)"
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 # Add local bin to PATH for uv python
-export PATH="$PATH:~/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Add Moon to PATH
 export PATH="$PATH:$HOME/.moon/bin"
