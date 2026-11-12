@@ -122,8 +122,6 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
 # User conf
 # Set up PATH for local bin directories
@@ -194,6 +192,10 @@ alias t='tmux'
 alias ta='tmux attach'
 alias ts='tmux switch-client -t $(tmux list-sessions -F \#S | gum filter --placeholder "Pick session...") || tmux attach -t $(tmux list-sessions -F \#S | gum filter --placeholder "Pick session...")'
 
+# Tailscale
+alias tup='tailscale up --accept-routes'
+alias tdn='tailscale down'
+
 # Gum theme
 export GUM_INPUT_CURSOR_FOREGROUND=#4474c2
 export GUM_SPIN_SPINNER_FOREGROUND=#4474c2
@@ -226,3 +228,5 @@ export PATH="$PATH:$HOME/.local/bin"
 
 # Add Moon to PATH
 export PATH="$PATH:$HOME/.moon/bin"
+
+[ -s "$HOME/.local/share/moon/bin/env" ] && . "$HOME/.local/share/moon/bin/env"

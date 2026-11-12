@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Seed the generated files that Hyprland needs at startup.
 #
-# hyprland.conf does `source = colors.conf` and `source = monitors.conf`, but
+# hyprland.lua does `require("colors")` and `require("monitors")`, but
 # both are produced by tools that only run *after* the session is up (matugen
 # from the wallpaper, hyprdynamicmonitors from the attached displays). They are
 # build artifacts, so they are gitignored -- which means on a fresh machine they
-# don't exist yet and the first launch would source two missing files.
+# don't exist yet and the first launch would fall back to a built-in palette and a generic monitor rule.
 #
 # This script creates them. It is idempotent and safe to re-run.
 #
@@ -24,9 +24,35 @@ HDM_DIR="$HOME/.config/hyprdynamicmonitors"
 # Monitors: seed from the fallback profile until hyprdynamicmonitors picks the
 # real one based on what's actually plugged in.
 # ---------------------------------------------------------------------------
-if [ ! -e "$HYPR_DIR/monitors.conf" ]; then
-    cp "$HDM_DIR/hyprconfigs/fallback.conf" "$HYPR_DIR/monitors.conf"
-    echo "bootstrap: seeded monitors.conf from the fallback profile"
+if [ ! -e "$HYPR_DIR/monitors.lua" ]; then
+    cp "$HDM_DIR/hyprconfigs/fallback.lua" "$HYPR_DIR/monitors.lua"
+    echo "bootstrap: seeded monitors.lua from the fallback profile"
+fi
+
+# ---------------------------------------------------------------------------
+# GTK settings: dark colour scheme, icon theme, fonts. dconf is a binary
+# database, so it can't be symlinked -- load a text dump instead. `dconf load`
+# merges: keys not listed in the dump are left alone.
+# ---------------------------------------------------------------------------
+DOTFILES_DESKTOP="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+if command -v dconf >/dev/null 2>&1; then
+    if dconf load / < "$DOTFILES_DESKTOP/dconf/settings.ini"; then
+        echo "bootstrap: loaded dconf settings"
+    else
+        echo "bootstrap: dconf load failed (no session bus yet?), re-run after login" >&2
+    fi
+fi
+
+# ---------------------------------------------------------------------------
+# Thunar: open in the list ("details", Ctrl+2) view. Thunar keeps its settings
+# in xfconf, which rewrites this file, so seed a copy rather than symlink it.
+# Needs programs.xfconf.enable in the NixOS config or Thunar forgets everything.
+# ---------------------------------------------------------------------------
+XFCONF_DIR="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+if [ ! -e "$XFCONF_DIR/thunar.xml" ]; then
+    mkdir -p "$XFCONF_DIR"
+    cp "$DOTFILES_DESKTOP/thunar/thunar.xml" "$XFCONF_DIR/thunar.xml"
+    echo "bootstrap: seeded Thunar settings (list view)"
 fi
 
 # ---------------------------------------------------------------------------

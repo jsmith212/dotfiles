@@ -1,0 +1,59 @@
+{
+  "env": {
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
+  },
+  "model": "fable[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/smitj/Git/gogogo/hooks/check-update.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); user=$(whoami); host=$(hostname -s); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); model=$(echo \"$input\" | jq -r '.model.display_name'); branch=$(git -C \"$cwd\" branch --show-current 2>/dev/null); [ -z \"$branch\" ] && branch=$(git -C \"$cwd\" rev-parse --short HEAD 2>/dev/null); gitpart=''; if [ -n \"$branch\" ]; then dirty=''; [ -n \"$(git -C \"$cwd\" status --porcelain 2>/dev/null | head -c1)\" ] && dirty='*'; gitpart=$(printf ' \\033[35m(%s%s)\\033[0m' \"$branch\" \"$dirty\"); fi; used=$(echo \"$input\" | jq -r '.context_window.used_percentage // 0'); pct=$(printf '%.0f' \"$used\"); filled=$((pct/10)); empty=$((10-filled)); bar=$(printf '%*s' \"$filled\" '' | sed 's/ /█/g'); rest=$(printf '%*s' \"$empty\" '' | sed 's/ /░/g'); if [ \"$pct\" -ge 80 ]; then color='\\033[31m'; elif [ \"$pct\" -ge 50 ]; then color='\\033[33m'; else color='\\033[32m'; fi; printf '\\033[32m%s@%s\\033[0m:\\033[34m%s\\033[0m%s  %s  %b[%s%s] %d%%\\033[0m' \"$user\" \"$host\" \"$cwd\" \"$gitpart\" \"$model\" \"$color\" \"$bar\" \"$rest\" \"$pct\""
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "applying-inflection-brand-identity@inflection-skills": true,
+    "gmat-scenarios@inflection-skills": true,
+    "kicad-custom-design-rules@inflection-skills": true,
+    "orbital-mechanics@inflection-skills": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "creating-likec4-diagrams@inflection-skills": true,
+    "implement-project@inflection-skills": true,
+    "skill-creator@claude-plugins-official": true,
+    "documenting-harnesses-with-wireviz@inflection-skills": true,
+    "bother@inflection-skills": true,
+    "linear-cli@inflection-skills": true,
+    "cc-plugin-you-should-know@builtin": false
+  },
+  "extraKnownMarketplaces": {
+    "inflection-skills": {
+      "source": {
+        "source": "github",
+        "repo": "Inflection-Space-Systems/skills"
+      }
+    }
+  },
+  "feedbackSurveyRate": 0,
+  "feedbackDrafts": "off",
+  "effortLevel": "high",
+  "promptSuggestionEnabled": false,
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "switchModelsOnFlag": false,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "autoCompactEnabled": false
+}

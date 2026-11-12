@@ -338,6 +338,7 @@ return {
   -- AI Tooling
   {
     "zbirenbaum/copilot.lua",
+    enabled = false,
     lazy = false,
     opts = function()
       return require "configs.copilot"

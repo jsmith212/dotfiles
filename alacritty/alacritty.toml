@@ -1,5 +1,5 @@
 [general]
-import = ["~/.config/alacritty/themes/deep_space.toml"]
+import = ["~/.config/alacritty/themes/matugen.toml"]
 
 [env]
 TERM = "xterm-256color"
@@ -7,6 +7,7 @@ TERM = "xterm-256color"
 [window]
 padding = { x = 2, y = 2 }
 option_as_alt = "Both"
+opacity = 0.90
 
 [scrolling]
 history = 100000

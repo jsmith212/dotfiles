@@ -1,5 +1,5 @@
 [general]
-destination = "$HOME/.config/hypr/monitors.conf"
+destination = "$HOME/.config/hypr/monitors.lua"
 # post_apply_exec = "sh -c '$HOME/.config/hyprdynamicmonitors/scripts/reload-desktop.sh'"
 
 [tui.colors]
@@ -61,7 +61,7 @@ description = "AOC U34G2G4R3 0x0000D00C"
 monitor_tag = "external"
 
 [fallback_profile]
-config_file = "hyprconfigs/fallback.conf"
+config_file = "hyprconfigs/fallback.lua"
 config_file_type = "static"
 
 

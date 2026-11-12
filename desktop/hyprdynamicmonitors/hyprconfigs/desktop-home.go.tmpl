@@ -1,18 +1,14 @@
-# Generated with hyprdynamicmonitors freeze.
-# This is a template that you can edit, it is just a starter that pulled your current monitor setup,
-# adjust as needed.
-# You can use templates here etc, see https://github.com/fiffeek/hyprdynamicmonitors/blob/main/examples/basic/hyprconfigs/template.go.tmpl.
-# Monitors are given arbitrary tags (the "monitor" prefix and the ID coming from hyprland).
-# If you are using tui to edit, leave this at the end of your file (the last monitor config applies)
-# and leave the markers.
+-- Hyprland monitor layout, rendered by hyprdynamicmonitors into ~/.config/hypr/monitors.lua.
+-- This is a Go template that must produce Lua (hl.monitor calls), see
+-- https://wiki.hypr.land/configuring/core/monitors/
+-- Keep the TUI markers: upstream is moving its TUI/freeze output to Lua with these.
 
 {{- $laptop := index .MonitorsByTag "laptop" -}}
-{{- $external := index .MonitorsByTag "external" -}}
+{{- $external := index .MonitorsByTag "external" }}
 
-{{- if isLidClosed }}
-monitor={{$laptop.Name}},disable
-{{- else }}
-monitor={{$laptop.Name}},1920x1080@60.03300,2680x1440,1.00000000,transform,0,vrr,0
+{{ if isLidClosed -}}
+hl.monitor({ output = "{{$laptop.Name}}", disabled = true })
+{{- else -}}
+hl.monitor({ output = "{{$laptop.Name}}", mode = "1920x1080@60.03300", position = "2680x1440", scale = 1, transform = 0, vrr = 0 })
 {{- end }}
-
-monitor={{$external.Name}},3440x1440@99.98000,1920x0,1.00000000,transform,0,vrr,0
+hl.monitor({ output = "{{$external.Name}}", mode = "3440x1440@99.98000", position = "1920x0", scale = 1, transform = 0, vrr = 0 })

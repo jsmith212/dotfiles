@@ -27,6 +27,7 @@
     ~/.config/hyprdynamicmonitors: desktop/hyprdynamicmonitors
     ~/.config/waybar: desktop/waybar
     ~/.config/rofi: desktop/rofi
+    ~/.local/share/rofi/themes/myrofi.rasi: desktop/rofi/themes/myrofi.rasi
     ~/.config/swaync: desktop/swaync
     ~/.config/matugen: desktop/matugen
     ~/Wallpapers: desktop/wallpapers
@@ -72,6 +73,7 @@
 
     # Claude
     ~/.claude/agents: claude/agents
+    ~/.claude/settings.json: claude/settings.json
 
 - shell:
     - command: git submodule sync --recursive
@@ -224,6 +226,11 @@
       default: latest
       versions:
         - latest
+    - plugin: codex
+      url: https://github.com/TimothyMerlin/asdf-codex.git
+      default: latest
+      versions:
+        - latest
 
 - shell:
     # Need the preview flag because global is not officially supported yet
@@ -232,6 +239,12 @@
       quiet: true
     - command: uv tool install better-timetagger-cli
       description: Install Better Time Tagger CLI with UV
+      quiet: true
+    - command: uv tool install commitizen
+      description: Install Commitizen with UV
+      quiet: true
+    - command: uv tool install pre-commit
+      description: Install pre-commit with UV
       quiet: true
     - command: helm plugin install https://github.com/jkroepke/helm-secrets --version v4.6.5
       description: Install Helm Secrets Plugin

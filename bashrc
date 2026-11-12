@@ -116,5 +116,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+[ -s "$HOME/.local/share/moon/bin/env" ] && . "$HOME/.local/share/moon/bin/env"

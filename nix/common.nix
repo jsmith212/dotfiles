@@ -1,11 +1,7 @@
+# Everything shared by all machines. Per-machine settings live in hosts/<name>/.
 { config, lib, pkgs, inputs ? {}, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -22,14 +18,7 @@
     size = 4*1024;
   } ];
 
-  # Fix lid switch
-  boot.kernelParams = [ 
-   "nvme_core.default_ps_max_latency_us=0" 
-   "button.lid_init_state=open" 
-  ];
-
   # Enable networking
-  networking.hostName = "JSLaptop"; # Define your hostname.
   networking.wireless.iwd.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
 
@@ -38,6 +27,7 @@
 
   # Set your time zone.
   time.timeZone = "America/Denver";
+  environment.etc."timezone".text = config.time.timeZone;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -73,6 +63,14 @@
   };
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  # ydotool for input
+  programs.ydotool.enable = true;
+  boot.kernelModules = [ "uinput" ];
+  services.gnome.at-spi2-core.enable = true;
+
+  # resolved to play nice with Tailscale DNS
+  services.resolved.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -90,6 +88,9 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
+  # 3D Mouse support
+  hardware.spacenavd.enable = true;
 
   # Compat fixes for paths
   services.envfs.enable = true; # Workaround for /bin/bash shebangs
@@ -116,9 +117,9 @@
   programs.zsh = {
     enable = true;
     shellAliases = {
-      nrs = "nixos-rebuild switch --sudo --flake $HOME/.dotfiles/nix/platforms#$(hostname)";
+      nrs = "nixos-rebuild switch --sudo --flake $HOME/.dotfiles/nix#$(hostname)";
       ngc = "sudo nix-collect-garbage -d";
-      nup = "nix flake update --flake $HOME/.dotfiles/nix/platforms && nixos-rebuild boot --sudo --flake $HOME/.dotfiles/nix/platforms#$(hostname)";
+      nup = "nix flake update --flake $HOME/.dotfiles/nix && nixos-rebuild boot --sudo --flake $HOME/.dotfiles/nix#$(hostname)";
       fpu = "flatpak update -y";
       update = "ngc && nup && fpu";
     };
@@ -139,7 +140,7 @@
   users.users.smitj = {
     isNormalUser = true;
     description = "Jackson Smith";
-    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "ydotool" ];
     packages = with pkgs; [
       casync
       cbonsai
@@ -159,6 +160,7 @@
   services.tailscale = {
     # Enable tailscale at startup
     enable = true;
+    useRoutingFeatures = "client";
 
     # If you would like to use a preauthorized key, set
     # authKeyFile = "/run/secrets/tailscale_key";
@@ -185,6 +187,10 @@
       user.email = "29954021+jsmith212@users.noreply.github.com";
       init.defaultBranch = "main";
       push = { autoSetupRemote = true; };
+      pull.rebase = false;
+      core.excludesFile = "${pkgs.writeText "gitignore-global" ''
+        **/.claude/settings.local.json
+      ''}";
     };
   };
 
@@ -197,15 +203,29 @@
     };
   };
 
+  programs.xfconf.enable = true;
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [ thunar-archive-plugin thunar-volman ];
+  };
+
   # Fuck you JLink.
   nixpkgs.config.permittedInsecurePackages = [
-    "segger-jlink-qt4-952"
+    "segger-jlink-qt4-970"
   ];
   # nixpkgs.config.allowInsecurePredicate = pkg: builtins.match "segger-jlink-qt4-.*" (lib.getName pkg) != null;
+  # Automatically authorize all Dell WD19TB docks.
   nixpkgs.config.segger-jlink.acceptLicense = true;
   services.udev.extraRules = ''
     ATTR{idVendor}=="1366", MODE="0666"
     ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666", GROUP="dialout"
+    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{vendor}=="0xd4", ATTR{device}=="0xb070", ATTR{authorized}=="0", ATTR{authorized}="1"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="21a9", MODE="0666"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0925", ATTR{idProduct}=="3881", MODE="0666"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="0487", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5487", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="0413", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="5413", ATTR{power/control}="on"
   '';
 
   # List packages installed in system profile. To search, run:
@@ -222,16 +242,18 @@
     fzf
     gcc
     gfortran
-    openblas
+    glib
     gnumake
     gnupg
     jq
     libsecret
     nfs-utils
     ninja
+    openblas
     pass
     pinentry-curses
     python3
+    rar
     samba
     smbclient-ng
     tmux
@@ -240,16 +262,19 @@
     vim
     vscode-fhs
     wget
+    wtype
     yazi
     yq
-    rar
     zip
 
     # FPGA
     icestorm
     nextpnr
-    surfer
+    #surfer
     yosys
+
+    # SpaceNav
+    spnavcfg
 
     # Hyprland
     bluetui
@@ -273,10 +298,7 @@
     rofi
     swaynotificationcenter
     swayosd
-    swww
-    thunar
-    thunar-archive-plugin
-    thunar-volman
+    awww
     tumbler
     waybar
     wf-recorder
@@ -293,6 +315,7 @@
     nerd-fonts.fira-code
     meslo-lgs-nf
     font-awesome
+    fira-code
   ];
 
   # Default applications
@@ -339,13 +362,5 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
 
 }

@@ -32,17 +32,19 @@ Hyprland and everything around it. Linked into place by `install.conf.yaml`.
 These are build artifacts, not source. Don't edit them — edit the template and
 regenerate.
 
-- Everything matugen writes: `hypr/colors.conf`, `waybar/colors.css`,
+- Everything matugen writes: `hypr/colors.lua`, `hypr/hyprlock-colors.conf`,
+  `waybar/colors.css`,
   `rofi/colors.rasi`, `gtk-{3,4}.0/colors.css`, `qt{5,6}ct/colors/matugen.conf`,
   `btop/themes/matugen.theme`, `hyprdynamicmonitors/themes/matugen.toml`, and
   `alacritty/themes/matugen.toml`. The full mapping lives in
   `matugen/config.toml`.
-- `hypr/monitors.conf` — rewritten by hyprdynamicmonitors for whichever displays
+- `hypr/monitors.lua` — rewritten by hyprdynamicmonitors for whichever displays
   are plugged in. The real source is `hyprdynamicmonitors/hyprconfigs/`.
 
-`hyprland.conf` sources `colors.conf` and `monitors.conf` at startup, but both
+`hyprland.lua` requires `colors.lua` and `monitors.lua` at startup, but both
 are produced by tools that only run *after* the session is up. `bootstrap.sh`
-seeds them so a fresh machine's first launch isn't sourcing missing files. It
+seeds them so a fresh machine's first launch has its real palette and monitor
+layout instead of the built-in fallbacks. It
 runs automatically as part of `./install`, and is safe to re-run:
 
 ```sh
