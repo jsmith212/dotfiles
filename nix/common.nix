@@ -209,13 +209,9 @@
     plugins = with pkgs; [ thunar-archive-plugin thunar-volman ];
   };
 
-  # Fuck you JLink.
-  nixpkgs.config.permittedInsecurePackages = [
-    "segger-jlink-qt4-970"
-  ];
-  # nixpkgs.config.allowInsecurePredicate = pkg: builtins.match "segger-jlink-qt4-.*" (lib.getName pkg) != null;
-  # Automatically authorize all Dell WD19TB docks.
-  nixpkgs.config.segger-jlink.acceptLicense = true;
+  # J-Link itself is pinned and licence-accepted in jlink.nix.
+  # udev: J-Link/FTDI/logic analyser permissions, auto-authorise Dell WD19TB
+  # docks, keep Realtek USB hubs awake.
   services.udev.extraRules = ''
     ATTR{idVendor}=="1366", MODE="0666"
     ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666", GROUP="dialout"

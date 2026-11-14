@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # J-Link only, pinned so system updates never touch it (see jlink.nix).
+    nixpkgs-jlink.url = "github:NixOS/nixpkgs/177d0540942fb205af6993b1d5fa0b57799e09f8";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hyprdynamicmonitors.url = "github:fiffeek/hyprdynamicmonitors";
     hyprdynamicmonitors.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,6 +18,7 @@
       modules = [
         hyprdynamicmonitors.nixosModules.default
         ./common.nix
+        ./jlink.nix
         ./hosts/${name}
       ] ++ extraModules;
     };
