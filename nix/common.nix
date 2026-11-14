@@ -111,6 +111,8 @@
     libGL
     glib
     ncurses
+    blas     # slycot build + runtime
+    lapack   # slycot build + runtime
   ];
   environment.sessionVariables.LD_LIBRARY_PATH = [
     "/run/current-system/sw/share/nix-ld/lib"                                                   
