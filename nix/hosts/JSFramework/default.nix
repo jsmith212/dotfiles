@@ -19,5 +19,5 @@
 
   # NixOS release this machine was first installed with. Set once from the
   # installer's generated configuration.nix, then never change it.
-  system.stateVersion = "26.11";
+  system.stateVersion = "26.05";
 }
