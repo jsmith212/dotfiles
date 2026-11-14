@@ -139,12 +139,23 @@
 
   # OpenCloud sync client, started with the graphical session and restarted
   # if it dies. Each machine still needs a one-time login in the client.
+  #
+  # It must not start before Waybar's tray exists: with no tray it runs with
+  # no icon and no way to open its window, and a second launch just says it
+  # is already running. So wait (up to 60s) for the tray to appear on D-Bus.
   systemd.user.services.opencloud-desktop = {
     description = "OpenCloud desktop sync client";
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     after = [ "graphical-session.target" ];
     serviceConfig = {
+      ExecStartPre = pkgs.writeShellScript "wait-for-tray" ''
+        for i in $(${pkgs.coreutils}/bin/seq 1 120); do
+          ${pkgs.systemd}/bin/busctl --user status org.kde.StatusNotifierWatcher >/dev/null 2>&1 && exit 0
+          ${pkgs.coreutils}/bin/sleep 0.5
+        done
+        exit 0
+      '';
       ExecStart = "${pkgs.opencloud-desktop}/bin/opencloud";
       Restart = "on-failure";
       RestartSec = 5;
