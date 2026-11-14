@@ -28,13 +28,11 @@ member = "PropertiesChanged"
 name = "org.freedesktop.DBus.Properties.PropertiesChanged"
 body = "LidIsClosed"
 
-[power_events]
-
-[power_events.dbus_query_object]
-path = "/org/freedesktop/UPower/devices/line_power_AC"
-
-[[power_events.dbus_signal_match_rules]]
-object_path = "/org/freedesktop/UPower/devices/line_power_AC"
+# No [power_events] section on purpose: the AC adapter's UPower name differs
+# per machine (line_power_AC on the XPS, line_power_ACAD on the Framework), so
+# a hardcoded path makes the daemon refuse to start wherever it doesn't exist.
+# The daemon detects the name itself; nix/common.nix puts `upower` on its PATH
+# so that detection works inside the systemd service.
 
 [profiles.laptop]
 config_file = "$HOME/.config/hyprdynamicmonitors/hyprconfigs/laptop.go.tmpl"

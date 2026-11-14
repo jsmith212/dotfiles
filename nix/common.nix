@@ -350,6 +350,12 @@
     configPath = "/home/smitj/.config/hyprdynamicmonitors/config.toml";
   };
 
+  # hyprdynamicmonitors finds the AC adapter by running `upower -e`. The name
+  # differs per machine (line_power_AC on the XPS, line_power_ACAD on the
+  # Framework). Without upower on the service's PATH it silently falls back to
+  # a default name and refuses to start wherever that name doesn't exist.
+  systemd.user.services.hyprdynamicmonitors.path = [ pkgs.upower ];
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
