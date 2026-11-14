@@ -252,3 +252,11 @@
     - command: bash <(curl -fsSL https://moonrepo.dev/install/moon.sh)
       description: Install Moon
       quiet: true
+    # Both installers put a self-updating binary in ~/.local/bin. Skipped when
+    # already installed so re-running ./install doesn't reinstall them.
+    - command: '[ -x "$HOME/.local/bin/claude" ] || curl -fsSL https://claude.ai/install.sh | bash'
+      description: Install Claude Code
+      quiet: true
+    - command: '[ -x "$HOME/.local/bin/codex" ] || curl -fsSL https://chatgpt.com/codex/install.sh | sh'
+      description: Install Codex
+      quiet: true
