@@ -63,6 +63,14 @@
   };
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  # Lock screen. The module (rather than just the package) gives hyprlock its
+  # own PAM service; without one it falls back to su's. Fingerprint unlock is
+  # handled by hyprlock itself (auth:fingerprint in hyprlock.conf), so keep
+  # PAM's fingerprint step out of its password check, or typing a password
+  # would first wait for a finger.
+  programs.hyprlock.enable = true;
+  security.pam.services.hyprlock.fprintAuth = false;
+
   # ydotool for input
   programs.ydotool.enable = true;
   boot.kernelModules = [ "uinput" ];
@@ -129,7 +137,21 @@
   # Docker
   virtualisation.docker.enable = true;
 
-  # AppImage support (fuck you OpenCloud)
+  # OpenCloud sync client, started with the graphical session and restarted
+  # if it dies. Each machine still needs a one-time login in the client.
+  systemd.user.services.opencloud-desktop = {
+    description = "OpenCloud desktop sync client";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.opencloud-desktop}/bin/opencloud";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
+
+  # AppImage support
   programs.appimage = {
     enable = true;
     binfmt = true;
@@ -246,6 +268,7 @@
     nfs-utils
     ninja
     openblas
+    opencloud-desktop
     pass
     pinentry-curses
     python3
@@ -278,7 +301,6 @@
     grimblast
     hyprcursor
     hypridle
-    hyprlock
     hyprpicker
     hyprpolkitagent
     hyprsunset
