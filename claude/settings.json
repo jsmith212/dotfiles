@@ -11,6 +11,24 @@
             "type": "command",
             "command": "bash /home/smitj/Git/gogogo/hooks/check-update.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/memory-sync.sh\" pull \"$HOME/.claude/projects/$(printf '%s' \"${CLAUDE_PROJECT_DIR:-$PWD}\" | sed 's#[/._]#-#g')/memory\"",
+            "timeout": 20,
+            "statusMessage": "Syncing memory from remote…"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/memory-sync.sh\" push \"$HOME/.claude/projects/$(printf '%s' \"${CLAUDE_PROJECT_DIR:-$PWD}\" | sed 's#[/._]#-#g')/memory\"",
+            "timeout": 20,
+            "async": true
           }
         ]
       }
