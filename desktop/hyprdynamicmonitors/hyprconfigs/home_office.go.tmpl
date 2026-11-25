@@ -3,7 +3,12 @@
 -- https://wiki.hypr.land/configuring/core/monitors/
 -- Keep the TUI markers: upstream is moving its TUI/freeze output to Lua with these.
 -- <<<<< TUI AUTO START
-hl.monitor({ output = "desc:AU Optronics 0x5B2D", mode = "1920x1080@60.03300", position = "1160x0", scale = 1, transform = 0, vrr = 0 })
+{{- $laptop := index .MonitorsByTag "monitor0" }}
+{{- if eq $laptop.Description "China Star Optoelectronics Technology Co. Ltd MND508ZB1-1" }}
+hl.monitor({ output = "{{$laptop.Name}}", mode = "preferred", position = "1160x0", scale = 1.5, transform = 0, vrr = 0 })
+{{- else }}
+hl.monitor({ output = "{{$laptop.Name}}", mode = "1920x1080@60.03300", position = "1160x0", scale = 1, transform = 0, vrr = 0 })
+{{- end }}
 hl.monitor({ output = "desc:Samsung Electric Company S22C300 0x5A365335", mode = "1920x1080@60.00000", position = "-2780x0", scale = 1, transform = 0, vrr = 0 })
 hl.monitor({ output = "desc:Dell Inc. DELL S2240T H6V5634L0DFU", mode = "1920x1080@60.00000", position = "-810x0", scale = 1, transform = 0, vrr = 0 })
 -- <<<<< TUI AUTO END

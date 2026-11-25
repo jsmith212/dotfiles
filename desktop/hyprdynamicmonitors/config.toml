@@ -57,6 +57,9 @@ config_file_type = "template"
 description = "China Star Optoelectronics Technology Co. Ltd MND508ZB1-1"
 monitor_tag = "laptop"
 
+# The docked profiles below accept either laptop's internal panel (XPS: AU
+# Optronics, Framework: China Star), so one layout serves both machines. The
+# templates pick the panel's mode/scale from the matched description.
 [profiles.desktop-home]
 config_file = "$HOME/.config/hyprdynamicmonitors/hyprconfigs/desktop-home.go.tmpl"
 config_file_type = "template"
@@ -64,7 +67,8 @@ config_file_type = "template"
 [profiles.desktop-home.conditions]
 
 [[profiles.desktop-home.conditions.required_monitors]]
-description = "AU Optronics 0x5B2D"
+description = "^(AU Optronics 0x5B2D|China Star Optoelectronics Technology Co\\. Ltd MND508ZB1-1)$"
+match_description_using_regex = true
 monitor_tag = "laptop"
 
 [[profiles.desktop-home.conditions.required_monitors]]
@@ -82,7 +86,8 @@ config_file_type = "template"
 [profiles.yankyurt.conditions]
 
 [[profiles.yankyurt.conditions.required_monitors]]
-description = "AU Optronics 0x5B2D"
+description = "^(AU Optronics 0x5B2D|China Star Optoelectronics Technology Co\\. Ltd MND508ZB1-1)$"
+match_description_using_regex = true
 monitor_tag = "monitor0"
 
 [[profiles.yankyurt.conditions.required_monitors]]
@@ -96,7 +101,8 @@ config_file_type = "template"
 [profiles.home_office.conditions]
 
 [[profiles.home_office.conditions.required_monitors]]
-description = "AU Optronics 0x5B2D"
+description = "^(AU Optronics 0x5B2D|China Star Optoelectronics Technology Co\\. Ltd MND508ZB1-1)$"
+match_description_using_regex = true
 monitor_tag = "monitor0"
 
 [[profiles.home_office.conditions.required_monitors]]
@@ -114,7 +120,8 @@ config_file_type = "template"
 [profiles.work.conditions]
 
 [[profiles.work.conditions.required_monitors]]
-description = "AU Optronics 0x5B2D"
+description = "^(AU Optronics 0x5B2D|China Star Optoelectronics Technology Co\\. Ltd MND508ZB1-1)$"
+match_description_using_regex = true
 monitor_tag = "monitor0"
 
 [[profiles.work.conditions.required_monitors]]

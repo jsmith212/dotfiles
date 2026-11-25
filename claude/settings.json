@@ -9,7 +9,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /home/smitj/Git/gogogo/hooks/check-update.sh",
+            "command": "bash /home/smitj/Git/inflection/gogogo/hooks/check-update.sh",
             "timeout": 10
           }
         ]
@@ -18,7 +18,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "input=$(cat); user=$(whoami); host=$(hostname -s); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); model=$(echo \"$input\" | jq -r '.model.display_name'); branch=$(git -C \"$cwd\" branch --show-current 2>/dev/null); [ -z \"$branch\" ] && branch=$(git -C \"$cwd\" rev-parse --short HEAD 2>/dev/null); gitpart=''; if [ -n \"$branch\" ]; then dirty=''; [ -n \"$(git -C \"$cwd\" status --porcelain 2>/dev/null | head -c1)\" ] && dirty='*'; gitpart=$(printf ' \\033[35m(%s%s)\\033[0m' \"$branch\" \"$dirty\"); fi; used=$(echo \"$input\" | jq -r '.context_window.used_percentage // 0'); pct=$(printf '%.0f' \"$used\"); filled=$((pct/10)); empty=$((10-filled)); bar=$(printf '%*s' \"$filled\" '' | sed 's/ /█/g'); rest=$(printf '%*s' \"$empty\" '' | sed 's/ /░/g'); if [ \"$pct\" -ge 80 ]; then color='\\033[31m'; elif [ \"$pct\" -ge 50 ]; then color='\\033[33m'; else color='\\033[32m'; fi; printf '\\033[32m%s@%s\\033[0m:\\033[34m%s\\033[0m%s  %s  %b[%s%s] %d%%\\033[0m' \"$user\" \"$host\" \"$cwd\" \"$gitpart\" \"$model\" \"$color\" \"$bar\" \"$rest\" \"$pct\""
+    "command": "input=$(cat); user=$(whoami); host=$(hostname -s); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); model=$(echo \"$input\" | jq -r '.model.display_name'); branch=$(git -C \"$cwd\" branch --show-current 2>/dev/null); [ -z \"$branch\" ] && branch=$(git -C \"$cwd\" rev-parse --short HEAD 2>/dev/null); gitpart=''; if [ -n \"$branch\" ]; then dirty=''; [ -n \"$(git -C \"$cwd\" status --porcelain 2>/dev/null | head -c1)\" ] && dirty='*'; gitpart=$(printf ' \\033[35m(%s%s)\\033[0m' \"$branch\" \"$dirty\"); fi; used=$(echo \"$input\" | jq -r '.context_window.used_percentage // 0'); pct=$(printf '%.0f' \"$used\"); filled=$((pct/10)); empty=$((10-filled)); bar=$(printf '%*s' \"$filled\" '' | sed 's/ /\u2588/g'); rest=$(printf '%*s' \"$empty\" '' | sed 's/ /\u2591/g'); if [ \"$pct\" -ge 80 ]; then color='\\033[31m'; elif [ \"$pct\" -ge 50 ]; then color='\\033[33m'; else color='\\033[32m'; fi; printf '\\033[32m%s@%s\\033[0m:\\033[34m%s\\033[0m%s  %s  %b[%s%s] %d%%\\033[0m' \"$user\" \"$host\" \"$cwd\" \"$gitpart\" \"$model\" \"$color\" \"$bar\" \"$rest\" \"$pct\""
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
@@ -52,8 +52,9 @@
   "promptSuggestionEnabled": false,
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "autoCompactEnabled": false,
   "switchModelsOnFlag": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "autoCompactEnabled": false
+  "theme": "dark"
 }
